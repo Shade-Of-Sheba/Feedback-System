@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { CheckCircle, Circle } from 'lucide-react';
+import Image from 'next/image';
+import { MessageCircle } from 'lucide-react';
 
 const emojiRatings = [
   { label: 'Angry', emoji: '😡' },
@@ -19,7 +21,7 @@ const likeOptions = [
   'Overall service',
 ];
 
-export default function FeedbackFormCompact() {
+export default function FeedbackFormWithLogo() {
   const [selectedEmoji, setSelectedEmoji] = useState('');
   const [likedItems, setLikedItems] = useState<string[]>([]);
   const [comment, setComment] = useState('');
@@ -49,8 +51,19 @@ export default function FeedbackFormCompact() {
       onSubmit={handleSubmit}
       className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg space-y-6"
     >
-      <h2 className="text-xl font-semibold text-gray-800">Share your feedback</h2>
+      {/* Logo */}
+      <Image
+  src="/kuriftu-logo.png" // Correct logo path
+  alt="Kuriftu Logo"
+  width={100}
+  height={100}
+  className="mb-4"
+/>
 
+
+      <h2 className="text-xl font-semibold text-gray-800 text-center">Share your feedback</h2>
+
+      {/* Rating */}
       <div>
         <p className="text-sm font-medium text-gray-700 mb-2">Rate your experience</p>
         <div className="flex gap-3">
@@ -79,6 +92,7 @@ export default function FeedbackFormCompact() {
         )}
       </div>
 
+      {/* What did you like */}
       <div>
         <p className="text-sm font-medium text-gray-700 mb-2">What did you like?</p>
         <ul className="space-y-2">
@@ -99,6 +113,7 @@ export default function FeedbackFormCompact() {
         </ul>
       </div>
 
+      {/* Comment */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
           Your comment (optional)
@@ -112,12 +127,24 @@ export default function FeedbackFormCompact() {
         />
       </div>
 
+      {/* Submit */}
       <button
         type="submit"
         className="w-full bg-[#8E1616] hover:bg-[#D84040] text-white py-2 rounded-md font-semibold"
       >
         Submit Feedback
       </button>
+      <div className="fixed bottom-6 right-6 z-50">
+  <button
+    type="button"
+    className="bg-[#8E1616] hover:bg-[#D84040] text-white p-3 rounded-full shadow-lg flex items-center justify-center"
+    title="Chat with us"
+    onClick={() => alert('Chat feature coming soon!')} // Replace with real logic
+  >
+    <MessageCircle className="w-6 h-6" />
+  </button>
+</div>
+
     </form>
   );
 }
