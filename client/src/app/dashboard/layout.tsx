@@ -29,7 +29,7 @@ export default function DashboardLayout({ children }: Props) {
       {/* Main Content */}
       <div className="flex-1 overflow-y-auto p-6">
         {/* Header */}
-        <header className="bg-white dark:bg-gray-800 shadow-md p-4 mb-6 rounded-md">
+        <header className="bg-white shadow-md p-4 mb-6 rounded-md">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
             Dashboard Area
           </h2>
