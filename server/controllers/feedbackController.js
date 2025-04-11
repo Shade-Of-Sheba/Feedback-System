@@ -3,7 +3,7 @@ const SpaFeedback = require('../models/SpaFeedback');
 const FoodFeedback = require('../models/FoodFeedback');
 const WaterParkFeedback = require('../models/WaterParkFeedback');
 
-// ----- RESERVATION -----
+
 exports.submitReservationFeedback = async (req, res) => {
   try {
     const feedback = new ReservationFeedback(req.body);
@@ -23,7 +23,7 @@ exports.getReservationFeedback = async (req, res) => {
   }
 };
 
-// ----- SPA -----
+
 exports.submitSpaFeedback = async (req, res) => {
   try {
     const feedback = new SpaFeedback(req.body);
@@ -43,7 +43,7 @@ exports.getSpaFeedback = async (req, res) => {
   }
 };
 
-// ----- FOOD -----
+
 exports.submitFoodFeedback = async (req, res) => {
   try {
     const feedback = new FoodFeedback(req.body);
