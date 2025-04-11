@@ -63,7 +63,7 @@ exports.getFoodFeedback = async (req, res) => {
   }
 };
 
-// ----- WATER PARK -----
+
 exports.submitWaterParkFeedback = async (req, res) => {
   try {
     const feedback = new WaterParkFeedback(req.body);
