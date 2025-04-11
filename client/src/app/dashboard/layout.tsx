@@ -79,7 +79,7 @@ export default function DashboardLayout({ children }: Props) {
 
         {/* Sidebar - Mobile (overlay style) */}
         {isMobileSidebarOpen && (
-          <aside className="sm:hidden fixed top-[70px] bottom-10 left-0 w-64 bg-gray-200 dark:bg-gray-800 p-4 z-40 shadow-md">
+          <aside className="sm:hidden fixed top-[70px] bottom-10 left-0 w-full bg-gray-200 dark:bg-gray-800 p-4 z-40 shadow-md">
             <nav className="flex flex-col space-y-2">
               <Link
                 href="/dashboard"
@@ -102,11 +102,11 @@ export default function DashboardLayout({ children }: Props) {
         )}
 
         {/* Main Content */}
-        <main className="flex-1 overflow-y-auto p-6">{children}</main>
+        <main className="flex-1 overflow-y-auto p-6 hide-scrollbar">{children}</main>
       </div>
 
       {/* Footer Nav - Mobile */}
-      <footer className="sm:hidden fixed bottom-0 left-0 right-0 bg-gray-200 dark:bg-gray-800 flex justify-around py-2 border-t z-50">
+      <footer className="sm:hidden fixed bottom-0 left-0 right-0 bg-gray-200 dark:bg-gray-800 flex justify-around py-6 border-t z-50">
         <Link
           href="/dashboard"
           className="flex flex-col items-center text-gray-700 dark:text-gray-300"
@@ -120,13 +120,7 @@ export default function DashboardLayout({ children }: Props) {
           <BarChart3 size={20} />
         </Link>
 
-        {/* Toggle Button - Mobile */}
-        <button
-          onClick={toggleMobileSidebar}
-          className="flex flex-col items-center text-gray-700 dark:text-gray-300"
-        >
-          {isMobileSidebarOpen ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
-        </button>
+       
       </footer>
     </div>
   );
