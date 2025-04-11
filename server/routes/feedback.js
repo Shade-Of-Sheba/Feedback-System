@@ -1,53 +1,21 @@
 const express = require('express');
 const router = express.Router();
+const feedbackController = require('../controllers/feedbackController');
 
-const ReservationFeedback = require('../models/ReservationFeedback');
-const SpaFeedback = require('../models/SpaFeedback');
-const FoodFeedback = require('../models/FoodFeedback');
-const WaterParkFeedback = require('../models/WaterParkFeedback');
+// Reservation
+router.post('/reservation', feedbackController.submitReservationFeedback);
+router.get('/reservation', feedbackController.getReservationFeedback);
 
-// POST Reservation Feedback
-router.post('/reservation', async (req, res) => {
-  try {
-    const feedback = new ReservationFeedback(req.body);
-    await feedback.save();
-    res.status(201).json({ message: 'Reservation feedback submitted!' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+// Spa
+router.post('/spa', feedbackController.submitSpaFeedback);
+router.get('/spa', feedbackController.getSpaFeedback);
 
-// POST Spa Feedback
-router.post('/spa', async (req, res) => {
-  try {
-    const feedback = new SpaFeedback(req.body);
-    await feedback.save();
-    res.status(201).json({ message: 'Spa feedback submitted!' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+// Food
+router.post('/food', feedbackController.submitFoodFeedback);
+router.get('/food', feedbackController.getFoodFeedback);
 
-// POST Food Feedback
-router.post('/food', async (req, res) => {
-  try {
-    const feedback = new FoodFeedback(req.body);
-    await feedback.save();
-    res.status(201).json({ message: 'Food feedback submitted!' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// POST Water Park Feedback
-router.post('/waterpark', async (req, res) => {
-  try {
-    const feedback = new WaterParkFeedback(req.body);
-    await feedback.save();
-    res.status(201).json({ message: 'Water park feedback submitted!' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+// Water Park
+router.post('/waterpark', feedbackController.submitWaterParkFeedback);
+router.get('/waterpark', feedbackController.getWaterParkFeedback);
 
 module.exports = router;
