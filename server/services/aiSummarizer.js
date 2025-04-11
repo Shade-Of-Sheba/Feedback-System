@@ -1,7 +1,7 @@
 const OpenAI = require('openai');
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-export const summarizeFeedback = async (messages) => {
+const summarizeFeedback = async (messages) => {
   const response = await openai.chat.completions.create({
     model: 'gpt-4',
     messages: [
@@ -11,3 +11,5 @@ export const summarizeFeedback = async (messages) => {
   });
   return response.choices[0].message.content;
 };
+
+module.exports = { summarizeFeedback };
