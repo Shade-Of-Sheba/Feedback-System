@@ -1,248 +1,139 @@
-"use client";
+'use client';
 
 import React, { useState } from 'react';
-import Image from 'next/image';
-import { MessageCircle } from 'lucide-react';
 
-const emojiRatings = [
-  { label: 'Angry', emoji: '😡' },
-  { label: 'Disappointed', emoji: '😕' },
-  { label: 'Neutral', emoji: '😐' },
-  { label: 'Happy', emoji: '🙂' },
-  { label: 'Awesome!', emoji: '😍' },
-];
+const RatingForm = () => {
+  const [stayRating, setStayRating] = useState(4);
+  const [cleanliness, setCleanliness] = useState(75);
+  const [recommend, setRecommend] = useState<boolean | null>(null);
+  const [comments, setComments] = useState('');
 
-const allOptions = [
-  'Delivery speed',
-  'Product quality',
-  'Politeness and competence of staff',
-  'Customer support',
-  'Overall service',
-];
-
-const angryOptions = [
-  'Slow speed',
-  'Poor product quality',
-  'Low politeness and competence of staff',
-  'Unhelpful customer support',
-  'Poor overall service',
-];
-
-const disappointedOptions = [
-  'Slower than expected delivery',
-  'Product did not meet expectations',
-  'Staff could have been more attentive',
-  'Customer support was not satisfactory',
-  'Service was underwhelming',
-];
-
-const neutralOptions = [
-  'Delivery speed',
-  'Product quality',
-  'Politeness and competence of staff',
-  'Customer support',
-  'Overall service',
-];
-
-const happyOptions = [
-  'Delivery speed',
-  'Product quality',
-  'Politeness and competence of staff',
-  'Customer support',
-  'Overall service',
-];
-
-const awesomeOptions = [
-  'Delivery speed',
-  'Product quality',
-  'Politeness and competence of staff',
-  'Customer support',
-  'Overall service',
-];
-
-const optionsMap = {
-  Angry: angryOptions,
-  Disappointed: disappointedOptions,
-  Neutral: neutralOptions,
-  Happy: happyOptions,
-  'Awesome!': awesomeOptions,
-};
-
-export default function FeedbackFormWithLogo() {
-  const [selectedEmoji, setSelectedEmoji] = useState('');
-  const [likedItems, setLikedItems] = useState<string[]>([]);
-  const [comment, setComment] = useState('');
-
-  const handleEmojiSelect = (label: string) => {
-    setSelectedEmoji(label);
-    setLikedItems([]); // Reset selected items when emoji changes
+  const handleStarClick = (rating: number) => {
+    setStayRating(rating);
   };
 
-  const toggleLike = (item: string) => {
-    setLikedItems(prev =>
-      prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]
-    );
+  const handleCleanlinessChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCleanliness(parseInt(event.target.value));
   };
 
-  const handleSelectAll = () => {
-    setLikedItems(optionsMap[selectedEmoji] || allOptions);
+  const handleRecommendChange = (value: boolean) => {
+    setRecommend(value);
   };
 
-  const handleDeselectAll = () => {
-    setLikedItems([]);
+  const handleCommentsChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setComments(event.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = () => {
+    // In a real application, you would send this data to your backend
     console.log({
-      experience: selectedEmoji,
-      liked: likedItems,
-      comment,
+      stayRating,
+      cleanliness,
+      recommend,
+      comments,
     });
-    // Submission logic can go here
+    alert('Thank you for your feedback!');
+    // Optionally reset the form
+    setStayRating(0);
+    setCleanliness(50);
+    setRecommend(null);
+    setComments('');
   };
-
-  const currentOptions = optionsMap[selectedEmoji] || allOptions;
-  const questionText = selectedEmoji
-    ? selectedEmoji === 'Angry'
-      ? 'What made you angry?'
-      : selectedEmoji === 'Disappointed'
-      ? 'What disappointed you?'
-      : selectedEmoji === 'Neutral'
-      ? 'What aspects were neutral?'
-      : selectedEmoji === 'Happy'
-      ? 'What did you like?'
-      : selectedEmoji === 'Awesome!'
-      ? 'What did you love?'
-      : 'What aspects did you find relevant?'
-    : 'What aspects did you find relevant?';
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-md mx-auto p-6 bg-white dark:bg-gray-800 shadow-xl rounded-lg space-y-6 relative transition-colors duration-200"
-    >
-      {/* Logo */}
-      <div className="flex justify-center">
-        <Image
-          src="/kuriftu-logo.png"
-          alt="Kuriftu Logo"
-          width={100}
-          height={100}
-          className="mb-4"
-        />
-      </div>
+    <div className="bg-white rounded-lg shadow-md p-6 w-full max-w-md">
+      <h2 className="text-xl font-semibold mb-4">Rate Your Experience</h2>
 
-      {/* Heading */}
-      <h2 className="text-xl font-semibold text-center text-gray-800 dark:text-gray-100">
-        Your feedback is valuable
-      </h2>
-
-      {/* Emoji Rating */}
-      <div>
-        <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          Rate your experience
-        </p>
-        <div className="flex gap-6">
-          {emojiRatings.map(({ label, emoji }) => (
+      {/* How was your stay? */}
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2">
+          How was your stay?
+        </label>
+        <div className="flex items-center">
+          {[1, 2, 3, 4, 5].map((star) => (
             <button
-              key={label}
+              key={star}
               type="button"
-              onClick={() => handleEmojiSelect(label)}
-              className={`text-2xl relative transition-transform ${
-                selectedEmoji === label ? 'scale-125' : ''
+              onClick={() => handleStarClick(star)}
+              className={`text-yellow-500 text-2xl focus:outline-none ${
+                star <= stayRating ? 'fill-current' : 'fill-none'
               }`}
             >
-              {emoji}
-              {selectedEmoji === label && (
-                <span className="absolute -top-2 -right-2 bg-[#52a35a] text-white text-xs px-1.5 py-0.5 rounded-full">
-                  ✓
-                </span>
-              )}
+              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L14.51 8.26L21 9.68L15.62 14.56L17.93 21L12 17.88L6.07 21L8.38 14.56L3 9.68L9.49 8.26L12 2Z"/>
+              </svg>
             </button>
           ))}
         </div>
-        {selectedEmoji && (
-          <p className="mt-1 text-sm font-semibold text-[#52a35a] dark:text-[#52a35a]">
-            {selectedEmoji}
-          </p>
-        )}
       </div>
 
-      {/* Likes / Options based on Emoji */}
-      <div>
-        <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          {questionText}
-        </p>
-        <ul className="space-y-2">
-          {currentOptions.map(option => (
-            <li
-              key={option}
-              onClick={() => toggleLike(option)}
-              className={`flex items-center justify-between px-3 py-2 border rounded-md cursor-pointer transition-all duration-200 transform ${
-                likedItems.includes(option)
-                  ? 'bg-[#e05e97] dark:bg-[#e05e97] border-[#e05e97] scale-105'
-                  : 'hover:bg-[#dedb7e] dark:hover:bg-[#dedb7e] dark:border-[#c09755]'
-              }`}
-            >
-              <span className="text-sm text-gray-800 dark:text-gray-100">{option}</span>
-              {likedItems.includes(option) && (
-                <span className="text-[#52a35a] dark:text-[#52a35a] text-sm font-bold">✓</span>
-              )}
-            </li>
-          ))}
-        </ul>
-        <div className="flex justify-between mt-4">
+      {/* How clean was your room? */}
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2">
+          How clean was your room?
+        </label>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          value={cleanliness}
+          onChange={handleCleanlinessChange}
+          className="w-full h-2 bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 rounded-lg appearance-none cursor-pointer"
+        />
+        <div className="text-gray-500 text-xs mt-1">0 (Not clean) - 100 (Very clean)</div>
+      </div>
+
+      {/* Would you recommend our hotel? */}
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2">
+          Would you recommend our hotel?
+        </label>
+        <div className="flex space-x-2">
           <button
             type="button"
-            onClick={handleSelectAll}
-            className="text-sm text-[#52a35a] dark:text-[#52a35a] hover:text-[#8e1616] dark:hover:text-[#8e1616] transition-colors"
+            className={`bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none ${
+              recommend === true ? 'opacity-100' : 'opacity-50'
+            }`}
+            onClick={() => handleRecommendChange(true)}
           >
-            Select All
+            Yes
           </button>
           <button
             type="button"
-            onClick={handleDeselectAll}
-            className="text-sm text-[#52a35a] dark:text-[#52a35a] hover:text-[#8e1616] dark:hover:text-[#8e1616] transition-colors"
+            className={`bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none ${
+              recommend === false ? 'opacity-100' : 'opacity-50'
+            }`}
+            onClick={() => handleRecommendChange(false)}
           >
-            Deselect All
+            No
           </button>
         </div>
       </div>
 
-      {/* Comment */}
-      <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          Your comment (optional)
+      {/* Additional comments */}
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2">
+          Additional comments
         </label>
         <textarea
-          rows={4}
-          value={comment}
-          onChange={e => setComment(e.target.value)}
-          placeholder="Describe your experience here"
-          className="w-full p-2 border rounded-md resize-none dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
+          value={comments}
+          onChange={handleCommentsChange}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          placeholder="Enter your comments here..."
+          rows={3}
         />
       </div>
 
-      {/* Submit and Chat Button */}
-      <div className="flex justify-between items-center">
-        <button
-          type="submit"
-          className="w-full py-2 text-white font-semibold rounded-md bg-[#e05e97] hover:bg-[#D84040] dark:bg-[#D84040] dark:hover:bg-[#e05e97] transition-colors duration-200"
-        >
-          Submit Feedback
-        </button>
-
-        {/* Chat Button */}
-        <button
-          type="button"
-          title="Chat with us"
-          onClick={() => alert('Chat feature coming soon!')}
-          className="p-3 text-white rounded-full shadow-lg bg-[#e05e97] hover:bg-[#D84040] dark:bg-[#D84040] dark:hover:bg-[#e05e97] flex items-center justify-center transition-colors duration-200 ml-4"
-        >
-          <MessageCircle className="w-6 h-6" />
-        </button>
-      </div>
-    </form>
+      {/* Submit button */}
+      <button
+        type="submit"
+        onClick={handleSubmit}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      >
+        Submit
+      </button>
+    </div>
   );
-}
+};
+
+export default RatingForm;
