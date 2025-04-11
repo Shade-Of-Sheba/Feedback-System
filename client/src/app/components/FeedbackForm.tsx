@@ -120,7 +120,7 @@ export default function FeedbackFormWithLogo() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-md mx-auto p-6 bg-white dark:bg-gray-800 shadow-lg rounded-lg space-y-6 relative transition-colors duration-200"
+      className="max-w-md mx-auto p-6 bg-white dark:bg-gray-800 shadow-xl rounded-lg space-y-6 relative transition-colors duration-200"
     >
       {/* Logo */}
       <div className="flex justify-center">
@@ -155,7 +155,7 @@ export default function FeedbackFormWithLogo() {
             >
               {emoji}
               {selectedEmoji === label && (
-                <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs px-1.5 py-0.5 rounded-full">
+                <span className="absolute -top-2 -right-2 bg-[#52a35a] text-white text-xs px-1.5 py-0.5 rounded-full">
                   ✓
                 </span>
               )}
@@ -163,7 +163,7 @@ export default function FeedbackFormWithLogo() {
           ))}
         </div>
         {selectedEmoji && (
-          <p className="mt-1 text-sm font-semibold text-blue-600 dark:text-blue-400">
+          <p className="mt-1 text-sm font-semibold text-[#52a35a] dark:text-[#52a35a]">
             {selectedEmoji}
           </p>
         )}
@@ -180,12 +180,14 @@ export default function FeedbackFormWithLogo() {
               key={option}
               onClick={() => toggleLike(option)}
               className={`flex items-center justify-between px-3 py-2 border rounded-md cursor-pointer transition-all duration-200 transform ${
-                likedItems.includes(option) ? 'bg-blue-100 dark:bg-blue-800 border-blue-500 scale-105' : 'hover:bg-gray-50 dark:hover:bg-gray-700 dark:border-gray-600'
+                likedItems.includes(option)
+                  ? 'bg-[#e05e97] dark:bg-[#e05e97] border-[#e05e97] scale-105'
+                  : 'hover:bg-[#dedb7e] dark:hover:bg-[#dedb7e] dark:border-[#c09755]'
               }`}
             >
               <span className="text-sm text-gray-800 dark:text-gray-100">{option}</span>
               {likedItems.includes(option) && (
-                <span className="text-blue-600 dark:text-blue-300 text-sm font-bold">✓</span>
+                <span className="text-[#52a35a] dark:text-[#52a35a] text-sm font-bold">✓</span>
               )}
             </li>
           ))}
@@ -194,14 +196,14 @@ export default function FeedbackFormWithLogo() {
           <button
             type="button"
             onClick={handleSelectAll}
-            className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
+            className="text-sm text-[#52a35a] dark:text-[#52a35a] hover:text-[#8e1616] dark:hover:text-[#8e1616] transition-colors"
           >
             Select All
           </button>
           <button
             type="button"
             onClick={handleDeselectAll}
-            className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
+            className="text-sm text-[#52a35a] dark:text-[#52a35a] hover:text-[#8e1616] dark:hover:text-[#8e1616] transition-colors"
           >
             Deselect All
           </button>
@@ -222,21 +224,21 @@ export default function FeedbackFormWithLogo() {
         />
       </div>
 
-      {/* Submit */}
-      <button
-        type="submit"
-        className="w-full py-2 text-white font-semibold rounded-md bg-[#8E1616] hover:bg-[#D84040] dark:bg-[#D84040] dark:hover:bg-[#8E1616] transition-colors duration-200"
-      >
-        Submit Feedback
-      </button>
+      {/* Submit and Chat Button */}
+      <div className="flex justify-between items-center">
+        <button
+          type="submit"
+          className="w-full py-2 text-white font-semibold rounded-md bg-[#e05e97] hover:bg-[#D84040] dark:bg-[#D84040] dark:hover:bg-[#e05e97] transition-colors duration-200"
+        >
+          Submit Feedback
+        </button>
 
-      {/* Chat Button */}
-      <div className="fixed bottom-6 right-6 z-50">
+        {/* Chat Button */}
         <button
           type="button"
           title="Chat with us"
           onClick={() => alert('Chat feature coming soon!')}
-          className="p-3 text-white rounded-full shadow-lg bg-[#8E1616] hover:bg-[#D84040] dark:bg-[#D84040] dark:hover:bg-[#8E1616] flex items-center justify-center transition-colors duration-200"
+          className="p-3 text-white rounded-full shadow-lg bg-[#e05e97] hover:bg-[#D84040] dark:bg-[#D84040] dark:hover:bg-[#e05e97] flex items-center justify-center transition-colors duration-200 ml-4"
         >
           <MessageCircle className="w-6 h-6" />
         </button>

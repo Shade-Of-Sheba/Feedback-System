@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { LayoutDashboard, BarChart3, ChevronLeft, ChevronRight } from 'lucide-react';
+import { LayoutDashboard, BarChart3, ChevronLeft, ChevronRight, User } from 'lucide-react';
 
 interface Props {
   children: React.ReactNode;
@@ -12,6 +12,7 @@ interface Props {
 export default function DashboardLayout({ children }: Props) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
   const toggleSidebar = () => {
     setIsCollapsed((prev) => !prev);
@@ -19,6 +20,10 @@ export default function DashboardLayout({ children }: Props) {
 
   const toggleMobileSidebar = () => {
     setIsMobileSidebarOpen((prev) => !prev);
+  };
+
+  const toggleProfileMenu = () => {
+    setIsProfileMenuOpen((prev) => !prev);
   };
 
   return (
@@ -39,6 +44,46 @@ export default function DashboardLayout({ children }: Props) {
           >
             Kuriftu
           </Link>
+        </div>
+
+        {/* Profile Section */}
+        <div className="flex items-center gap-3 relative">
+          {/* Profile Icon */}
+          <button onClick={toggleProfileMenu} className="flex items-center text-gray-800 dark:text-gray-100">
+            <User size={24} />
+          </button>
+
+          {/* Profile Menu Dropdown */}
+          {isProfileMenuOpen && (
+            <div className="absolute right-0 top-10 bg-white dark:bg-gray-800 shadow-lg rounded-md w-48 z-50">
+              <ul className="flex flex-col text-sm">
+                <li>
+                  <Link
+                    href="/profile"
+                    className="block py-2 px-4 text-gray-800 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  >
+                    View Profile
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/settings"
+                    className="block py-2 px-4 text-gray-800 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  >
+                    Settings
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/logout"
+                    className="block py-2 px-4 text-gray-800 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  >
+                    Logout
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
       </header>
 
@@ -119,8 +164,6 @@ export default function DashboardLayout({ children }: Props) {
         >
           <BarChart3 size={20} />
         </Link>
-
-       
       </footer>
     </div>
   );
