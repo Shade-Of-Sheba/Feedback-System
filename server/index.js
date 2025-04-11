@@ -6,7 +6,8 @@ const summaryRoutes = require('./routes/summaryRoutes');
 require('./services/scheduler'); // load cron job
 
 // Load environment variables from .env file
-dotenv.config();
+// dotenv.config();
+require('dotenv').config();
 
 // Debugging: Log the environment variables to check if they are loaded correctly
 console.log('MONGO_URI:', process.env.MONGO_URI);
