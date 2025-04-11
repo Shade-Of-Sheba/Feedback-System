@@ -1,137 +1,212 @@
 'use client';
 
 import React, { useState } from 'react';
+import { FaStar } from 'react-icons/fa';
 
 const RatingForm = () => {
-  const [stayRating, setStayRating] = useState(4);
-  const [cleanliness, setCleanliness] = useState(75);
+  const [matchExpectations, setMatchExpectations] = useState<boolean | null>(null);
+  const [expectationReason, setExpectationReason] = useState('');
+
+  const [cleanliness, setCleanliness] = useState(3);
+  const [comfort, setComfort] = useState(3);
+  const [checkin, setCheckin] = useState(3);
+  const [staff, setStaff] = useState(3);
+
+  const [roomWorked, setRoomWorked] = useState<boolean | null>(null);
+  const [roomIssue, setRoomIssue] = useState('');
+
   const [recommend, setRecommend] = useState<boolean | null>(null);
-  const [comments, setComments] = useState('');
+  const [recommendReason, setRecommendReason] = useState('');
 
-  const handleStarClick = (rating: number) => {
-    setStayRating(rating);
-  };
+  const [improvements, setImprovements] = useState('');
 
-  const handleCleanlinessChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCleanliness(parseInt(event.target.value));
-  };
-
-  const handleRecommendChange = (value: boolean) => {
-    setRecommend(value);
-  };
-
-  const handleCommentsChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setComments(event.target.value);
+  const handleStarClick = (setter: React.Dispatch<React.SetStateAction<number>>, value: number) => {
+    setter(value);
   };
 
   const handleSubmit = () => {
-    // In a real application, you would send this data to your backend
     console.log({
-      stayRating,
+      matchExpectations,
+      expectationReason,
       cleanliness,
+      comfort,
+      roomWorked,
+      roomIssue,
+      checkin,
+      staff,
       recommend,
-      comments,
+      recommendReason,
+      improvements,
     });
-    alert('Thank you for your feedback!');
-    // Optionally reset the form
-    setStayRating(0);
-    setCleanliness(50);
-    setRecommend(null);
-    setComments('');
+    alert('Thanks for your feedback!');
   };
 
+  const renderStars = (rating: number, setRating: (value: number) => void) => (
+    <div className="flex space-x-1">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <FaStar
+          key={star}
+          className={`cursor-pointer w-6 h-6 ${
+            star <= rating ? 'text-yellow-400' : 'text-gray-300'
+          }`}
+          onClick={() => handleStarClick(setRating, star)}
+        />
+      ))}
+    </div>
+  );
+
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 w-full max-w-md">
-      <h2 className="text-xl font-semibold mb-4">Rate Your Experience</h2>
+    <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-2xl mx-auto space-y-6">
+      <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">Guest Experience Feedback</h2>
 
-      {/* How was your stay? */}
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          How was your stay?
-        </label>
-        <div className="flex items-center">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <button
-              key={star}
-              type="button"
-              onClick={() => handleStarClick(star)}
-              className={`text-yellow-500 text-2xl focus:outline-none ${
-                star <= stayRating ? 'fill-current' : 'fill-none'
-              }`}
-            >
-              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L14.51 8.26L21 9.68L15.62 14.56L17.93 21L12 17.88L6.07 21L8.38 14.56L3 9.68L9.49 8.26L12 2Z"/>
-              </svg>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* How clean was your room? */}
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          How clean was your room?
-        </label>
-        <input
-          type="range"
-          min="0"
-          max="100"
-          value={cleanliness}
-          onChange={handleCleanlinessChange}
-          className="w-full h-2 bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 rounded-lg appearance-none cursor-pointer"
-        />
-        <div className="text-gray-500 text-xs mt-1">0 (Not clean) - 100 (Very clean)</div>
-      </div>
-
-      {/* Would you recommend our hotel? */}
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          Would you recommend our hotel?
-        </label>
-        <div className="flex space-x-2">
+      {/* Q1 */}
+      <div>
+        <p className="text-gray-700 font-medium">Did your room match your expectations?</p>
+        <div className="flex space-x-4 mt-2">
           <button
-            type="button"
-            className={`bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none ${
-              recommend === true ? 'opacity-100' : 'opacity-50'
+            onClick={() => setMatchExpectations(true)}
+            className={`px-4 py-2 rounded-full ${
+              matchExpectations === true
+                ? 'bg-green-500 text-white'
+                : 'bg-green-100 text-green-700 hover:bg-green-200'
             }`}
-            onClick={() => handleRecommendChange(true)}
           >
-            Yes
+            ✅ Yes
           </button>
           <button
-            type="button"
-            className={`bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none ${
-              recommend === false ? 'opacity-100' : 'opacity-50'
+            onClick={() => setMatchExpectations(false)}
+            className={`px-4 py-2 rounded-full ${
+              matchExpectations === false
+                ? 'bg-red-500 text-white'
+                : 'bg-red-100 text-red-700 hover:bg-red-200'
             }`}
-            onClick={() => handleRecommendChange(false)}
           >
-            No
+            ❌ No
           </button>
         </div>
+        {matchExpectations === false && (
+          <textarea
+            value={expectationReason}
+            onChange={(e) => setExpectationReason(e.target.value)}
+            placeholder="What didn’t meet your expectations?"
+            className="mt-2 w-full border p-2 rounded-md text-sm"
+          />
+        )}
       </div>
 
-      {/* Additional comments */}
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          Additional comments
-        </label>
+      {/* Q2 */}
+      <div>
+        <p className="text-gray-700 font-medium">How clean was your room?</p>
+        {renderStars(cleanliness, setCleanliness)}
+      </div>
+
+      {/* Q3 */}
+      <div>
+        <p className="text-gray-700 font-medium">How comfortable was your stay?</p>
+        {renderStars(comfort, setComfort)}
+      </div>
+
+      {/* Q4 */}
+      <div>
+        <p className="text-gray-700 font-medium">Did everything in the room work properly?</p>
+        <div className="flex space-x-4 mt-2">
+          <button
+            onClick={() => setRoomWorked(true)}
+            className={`px-4 py-2 rounded-full ${
+              roomWorked === true
+                ? 'bg-green-500 text-white'
+                : 'bg-green-100 text-green-700 hover:bg-green-200'
+            }`}
+          >
+            ✅ Yes
+          </button>
+          <button
+            onClick={() => setRoomWorked(false)}
+            className={`px-4 py-2 rounded-full ${
+              roomWorked === false
+                ? 'bg-red-500 text-white'
+                : 'bg-red-100 text-red-700 hover:bg-red-200'
+            }`}
+          >
+            ❌ No
+          </button>
+        </div>
+        {roomWorked === false && (
+          <textarea
+            value={roomIssue}
+            onChange={(e) => setRoomIssue(e.target.value)}
+            placeholder="What didn’t work?"
+            className="mt-2 w-full border p-2 rounded-md text-sm"
+          />
+        )}
+      </div>
+
+      {/* Q5 */}
+      <div>
+        <p className="text-gray-700 font-medium">How was the check-in/check-out process?</p>
+        {renderStars(checkin, setCheckin)}
+      </div>
+
+      {/* Q6 */}
+      <div>
+        <p className="text-gray-700 font-medium">How friendly and helpful was our staff?</p>
+        {renderStars(staff, setStaff)}
+      </div>
+
+      {/* Q7 */}
+      <div>
+        <p className="text-gray-700 font-medium">Would you recommend us?</p>
+        <div className="flex space-x-4 mt-2">
+          <button
+            onClick={() => setRecommend(true)}
+            className={`px-4 py-2 rounded-full ${
+              recommend === true
+                ? 'bg-blue-500 text-white'
+                : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
+            }`}
+          >
+            🔄 Yes
+          </button>
+          <button
+            onClick={() => setRecommend(false)}
+            className={`px-4 py-2 rounded-full ${
+              recommend === false
+                ? 'bg-red-500 text-white'
+                : 'bg-red-100 text-red-700 hover:bg-red-200'
+            }`}
+          >
+            ❌ No
+          </button>
+        </div>
+        {recommend === false && (
+          <textarea
+            value={recommendReason}
+            onChange={(e) => setRecommendReason(e.target.value)}
+            placeholder="Why wouldn’t you recommend us?"
+            className="mt-2 w-full border p-2 rounded-md text-sm"
+          />
+        )}
+      </div>
+
+      {/* Q8 */}
+      <div>
+        <p className="text-gray-700 font-medium">What can we improve?</p>
         <textarea
-          value={comments}
-          onChange={handleCommentsChange}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          placeholder="Enter your comments here..."
-          rows={3}
+          value={improvements}
+          onChange={(e) => setImprovements(e.target.value)}
+          placeholder="Let us know how we can make your next stay better!"
+          className="mt-2 w-full border p-2 rounded-md text-sm"
         />
       </div>
 
-      {/* Submit button */}
-      <button
-        type="submit"
-        onClick={handleSubmit}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-      >
-        Submit
-      </button>
+      <div className="text-center pt-4">
+        <button
+          onClick={handleSubmit}
+          className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-2 rounded-full"
+        >
+          Submit Feedback
+        </button>
+      </div>
     </div>
   );
 };
