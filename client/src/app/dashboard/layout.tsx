@@ -45,11 +45,10 @@ export default function DashboardLayout({ children }: Props) {
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar - Desktop and Tablet */}
         <aside
-          className={`
-            hidden md:flex flex-col justify-between
+          className={`hidden sm:flex flex-col justify-between
             ${isCollapsed ? 'w-20' : 'w-64'}
             transition-all duration-300
-            bg-gray-200 dark:bg-gray-800 p-2
+            bg-gray-200 dark:bg-gray-800 p-2 relative
           `}
         >
           <nav className="flex flex-col space-y-2">
@@ -69,10 +68,10 @@ export default function DashboardLayout({ children }: Props) {
             </Link>
           </nav>
 
-          {/* Toggle Button - Desktop/Tablet */}
+          {/* Toggle Button - Desktop and Tablet */}
           <button
             onClick={toggleSidebar}
-            className="md:flex items-center justify-center py-2 px-2 hover:bg-gray-300 dark:hover:bg-gray-700 rounded-md"
+            className="absolute top-4 right-4 p-2 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700 rounded-md"
           >
             {isCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
           </button>
