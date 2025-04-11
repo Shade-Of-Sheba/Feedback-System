@@ -27,7 +27,7 @@ app.use('/api/summaries', summaryRoutes);
 // Ensure that MONGO_URI is available
 if (!process.env.MONGO_URI) {
   console.error('Error: MONGO_URI is missing in environment variables.');
-  process.exit(1); // Exit the app if MONGO_URI is not defined
+  process.exit(1); 
 }
 
 mongoose.connect(process.env.MONGO_URI)
