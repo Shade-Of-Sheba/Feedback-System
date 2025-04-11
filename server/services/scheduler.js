@@ -1,7 +1,7 @@
-import cron from 'node-cron';
-import { summarizeFeedback } from './aiSummarizer.js';
-import Feedback from '../models/Feedback.js';
-import Summary from '../models/Summary.js';
+const cron = require('node-cron');
+const { summarizeFeedback } = require('./aiSummarizer.js');
+const Feedback = require('../models/Feedback.js');
+const Summary = require('../models/Summary.js');
 
 cron.schedule('0 23 * * *', async () => {
   const start = new Date();

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const feedbackSchema = new mongoose.Schema({
   content: String,
@@ -6,4 +6,4 @@ const feedbackSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-export default mongoose.model('Feedback', feedbackSchema);
+module.exports = mongoose.model('Feedback', feedbackSchema);

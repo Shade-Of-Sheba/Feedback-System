@@ -1,9 +1,9 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import feedbackRoutes from './routes/feedbackRoutes.js';
-import summaryRoutes from './routes/summaryRoutes.js';
-import './services/scheduler.js'; // load cron job
+const express = require('express');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const feedbackRoutes = require('./routes/feedbackRoutes');
+const summaryRoutes = require('./routes/summaryRoutes');
+require('./services/scheduler'); // load cron job
 
 dotenv.config();
 const app = express();

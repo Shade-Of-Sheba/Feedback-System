@@ -1,5 +1,5 @@
-import express from 'express';
-import Summary from '../models/Summary.js';
+const express = require('express');
+const Summary = require('../models/Summary.js');
 
 const router = express.Router();
 
@@ -8,4 +8,4 @@ router.get('/', async (req, res) => {
   res.json(summaries);
 });
 
-export default router;
+module.exports = router;
