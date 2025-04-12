@@ -1,10 +1,16 @@
-import FeedbackForm from './components/FeedbackForm';
+'use client';
+
+
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
-  return (
-    <main>
-      <FeedbackForm />
-    </main>
-  );
+  const router = useRouter()
 
+  useEffect(() => {
+    // Redirect to the welcome page when the home page is accessed
+    router.push('/welcome')
+  }, [router])
+
+  return null // This page doesn't need to render anything directly
 }
